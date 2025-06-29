@@ -8,14 +8,14 @@
     <!-- OGP (Open Graph Protocol) and Twitter Card Tags -->
     <meta property="og:title" content="ばーばりあんず Splatoon3大会 2025夏'P' 冒険の書">
     <meta property="og:description" content="聖なる招待状を手に、君だけの冒険譚を紡げ">
-    <!-- TODO: 下記の content の URL を、アップロードした画像の公開 URL に置き換えてください -->
-    <meta property="og:image" content="https://storage.googleapis.com/gemini-prod-us-central1-825353658253/uploaded/Gemini_Generated_Image_tggsmctggsmctggs.jpg-28c33435-2c38-4d47-a0a1-6366829df769">
+    <!-- IMPORTANT: This is a temporary URL. For permanent sharing, please replace this with a publicly hosted image URL. -->
+    <meta property="og:image" content="images/ogimage.png">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ばーばりあんず Splatoon3大会 2025夏'P' 冒険の書">
     <meta name="twitter:description" content="聖なる招待状を手に、君だけの冒険譚を紡げ">
-    <!-- TODO: 下記の content の URL を、アップロードした画像の公開 URL に置き換えてください -->
-    <meta name="twitter:image" content="https://storage.googleapis.com/gemini-prod-us-central1-825353658253/uploaded/Gemini_Generated_Image_tggsmctggsmctggs.jpg-28c33435-2c38-4d47-a0a1-6366829df769">
+    <!-- IMPORTANT: This is a temporary URL. For permanent sharing, please replace this with a publicly hosted image URL. -->
+    <meta name="twitter:image" content="images/ogimage.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -106,13 +106,14 @@
         <nav class="container mx-auto px-4">
             <div class="flex justify-between items-center py-3">
                 <div class="font-kiwi text-xl font-bold text-gray-800">冒険の書</div>
-                <div class="hidden md:flex space-x-6 text-sm font-bold">
+                <div class="hidden md:flex flex-wrap items-center justify-center space-x-4 text-sm font-bold">
                     <a href="#prologue" class="nav-link text-gray-600 hover:text-gray-900">序章</a>
                     <a href="#schedule" class="nav-link text-gray-600 hover:text-gray-900">冒険の旅程</a>
                     <a href="#roles" class="nav-link text-gray-600 hover:text-gray-900">伝説の役職</a>
                     <a href="#journey" class="nav-link text-gray-600 hover:text-gray-900">試練の行程</a>
                     <a href="#matchups" class="nav-link text-gray-600 hover:text-gray-900">対戦組合せ</a>
                     <a href="#endings" class="nav-link text-gray-600 hover:text-gray-900">運命の結末</a>
+                    <a href="#signup" class="nav-link text-gray-600 hover:text-gray-900">参加表明</a>
                 </div>
             </div>
         </nav>
@@ -191,10 +192,10 @@
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <p class="text-gray-600 leading-relaxed">
                     冒険に挑むため、君は6つの役職から1つを選択する。仲間との重複は不可。パーティーのバランスが勝利の鍵だ！<br>
-                    好きなブキと、役職ごとに定められたスペシャルウェポンで戦おう。カードをタップして詳細を確認せよ！
+                    好きなブキと、役職ごとに定められたスペシャルウェポンで戦おう。
                 </p>
             </div>
-            <div id="roles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="roles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             </div>
         </section>
 
@@ -254,12 +255,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const rolesData = [
-        { name: '勇者', icon: '🛡️', title: '決戦兵器', description: '戦況を覆す一撃を放つパーティーの切り札！', specials: ['ウルトラショット', 'ウルトラチャクチ', 'トリプルトルネード'] },
-        { name: '戦士', icon: '⚔️', title: '突撃隊長', description: '最前線を切り開き、道をこじ開ける鋼の肉体！', specials: ['ウルトラハンコ', 'カニタンク', 'テイオウイカ'] },
-        { name: '魔法使い', icon: '🧙', title: '戦場の魔術師', description: '盤面を支配し、予測不能のインクで敵を翻弄！', specials: ['メガホンレーザー5.1ch', 'スミナガシート', 'ショクワンダー', 'サメライド'] },
-        { name: '僧侶', icon: '❤️', title: '守護神', description: '仲間を護り、チームを生かす勝利の要！', specials: ['グレートバリア', 'アメフラシ', 'キューインキ'] },
-        { name: '盗賊', icon: '🗡️', title: '影の追跡者', description: '撹乱と奇襲で戦場をかき乱すトリックスター！', specials: ['デコイチラシ', 'ホップソナー', 'ナイスダマ'] },
-        { name: '遊び人', icon: '🤡', title: '混沌の道化師', description: '笑いとインクで勝利を呼び込む運命のゲームメーカー！', specials: ['ジェットパック', 'マルチミサイル', 'エナジースタンド'] }
+        { name: '勇者', image: 'images/hero.png', title: '決戦兵器', description: '戦況を覆す一撃を放つパーティーの切り札！' },
+        { name: '戦士', image: 'images/warrior.png', title: '突撃隊長', description: '最前線を切り開き、道をこじ開ける鋼の肉体！' },
+        { name: '魔法使い', image: 'images/wizard.png', title: '戦場の魔術師', description: '盤面を支配し、予測不能のインクで敵を翻弄！' },
+        { name: '僧侶', image: 'images/monk.png', title: '守護神', description: '仲間を護り、チームを生かす勝利の要！' },
+        { name: '盗賊', image: 'images/thief.png', title: '影の追跡者', description: '撹乱と奇襲で戦場をかき乱すトリックスター！' },
+        { name: '遊び人', image: 'images/player.png', title: '混沌の道化師', description: '笑いとインクで勝利を呼び込む運命のゲームメーカー！' }
     ];
 
     const chaptersData = [
@@ -290,23 +291,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const rolesGrid = document.getElementById('roles-grid');
     rolesData.forEach(role => {
         const card = document.createElement('div');
-        card.className = 'card bg-white rounded-lg shadow-lg p-6 cursor-pointer border-b-4 border-transparent hover:border-yellow-400';
+        card.className = 'card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300';
+        const placeholderUrl = `https://placehold.co/400x560/383838/FDFDFB?text=${encodeURIComponent(role.name)}`;
         card.innerHTML = `
-            <div class="text-4xl text-center mb-4">${role.icon}</div>
-            <h3 class="text-xl font-kiwi font-bold text-center text-gray-800">${role.name}</h3>
-            <p class="text-sm text-center text-yellow-600 font-bold mb-2">${role.title}</p>
-            <p class="text-sm text-center text-gray-500 mb-4">${role.description}</p>
-            <div class="details">
-                <h4 class="font-bold text-sm mt-4 mb-2 text-gray-700">使用可能スペシャル</h4>
-                <ul class="text-xs text-left list-disc list-inside text-gray-600 space-y-1">
-                    ${role.specials.map(sp => `<li>${sp}</li>`).join('')}
-                </ul>
-            </div>
+            <img src="${role.image}" alt="${role.name}" class="w-full h-auto" onerror="this.onerror=null;this.src='${placeholderUrl}';">
         `;
         rolesGrid.appendChild(card);
-        card.addEventListener('click', () => {
-            card.querySelector('.details').classList.toggle('open');
-        });
     });
 
     const chaptersList = document.getElementById('chapters-list');
