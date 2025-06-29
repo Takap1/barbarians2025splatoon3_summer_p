@@ -8,13 +8,11 @@
     <!-- OGP (Open Graph Protocol) and Twitter Card Tags -->
     <meta property="og:title" content="ばーばりあんず Splatoon3大会 2025夏'P' 冒険の書">
     <meta property="og:description" content="聖なる招待状を手に、君だけの冒険譚を紡げ">
-    <!-- IMPORTANT: This is a temporary URL. For permanent sharing, please replace this with a publicly hosted image URL. -->
     <meta property="og:image" content="images/ogimage.png">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ばーばりあんず Splatoon3大会 2025夏'P' 冒険の書">
     <meta name="twitter:description" content="聖なる招待状を手に、君だけの冒険譚を紡げ">
-    <!-- IMPORTANT: This is a temporary URL. For permanent sharing, please replace this with a publicly hosted image URL. -->
     <meta name="twitter:image" content="images/ogimage.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -113,7 +111,6 @@
                     <a href="#journey" class="nav-link text-gray-600 hover:text-gray-900">試練の行程</a>
                     <a href="#matchups" class="nav-link text-gray-600 hover:text-gray-900">対戦組合せ</a>
                     <a href="#endings" class="nav-link text-gray-600 hover:text-gray-900">運命の結末</a>
-                    <a href="#signup" class="nav-link text-gray-600 hover:text-gray-900">参加表明</a>
                 </div>
             </div>
         </nav>
@@ -233,18 +230,7 @@
             <div id="endings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             </div>
         </section>
-        <section id="signup" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">参加表明：旅への誓い</h2>
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    聖なる旅路への参加を決意した者は、以下の書式に名を記し、その意志を示されたし。
-                    汝の返信を、心よりお待ちしております。
-                </p>
-            </div>
-            <div class="max-w-3xl mx-auto bg-white p-2 md:p-4 rounded-lg shadow-lg overflow-hidden">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScqQaF_iq7FhYTOZH5NrHAfIdPvQyj15fUT15Oe1Kmiy99SdA/viewform?embedded=true" width="100%" height="2286" frameborder="0" marginheight="0" marginwidth="0">読み込んでいます…</iframe>
-            </div>
-        </section>
+
     </main>
     
     <footer class="text-center py-8 bg-gray-100 border-t border-gray-200">
@@ -295,6 +281,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const placeholderUrl = `https://placehold.co/400x560/383838/FDFDFB?text=${encodeURIComponent(role.name)}`;
         card.innerHTML = `
             <img src="${role.image}" alt="${role.name}" class="w-full h-auto" onerror="this.onerror=null;this.src='${placeholderUrl}';">
+             <div class="p-4 text-center">
+                <p class="text-lg text-yellow-600 font-bold font-kiwi mb-2">${role.title}</p>
+                <p class="text-sm text-gray-600 h-12">${role.description}</p>
+            </div>
         `;
         rolesGrid.appendChild(card);
     });
