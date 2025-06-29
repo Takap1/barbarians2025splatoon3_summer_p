@@ -241,12 +241,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     const rolesData = [
-        { name: '勇者', image: 'images/hero.png', title: '決戦兵器', description: '戦況を覆す一撃を放つパーティーの切り札！' },
-        { name: '戦士', image: 'images/warrior.png', title: '突撃隊長', description: '最前線を切り開き、道をこじ開ける鋼の肉体！' },
-        { name: '魔法使い', image: 'images/wizard.png', title: '戦場の魔術師', description: '盤面を支配し、予測不能のインクで敵を翻弄！' },
-        { name: '僧侶', image: 'images/monk.png', title: '守護神', description: '仲間を護り、チームを生かす勝利の要！' },
-        { name: '盗賊', image: 'images/thief.png', title: '影の追跡者', description: '撹乱と奇襲で戦場をかき乱すトリックスター！' },
-        { name: '遊び人', image: 'images/player.png', title: '混沌の道化師', description: '笑いとインクで勝利を呼び込む運命のゲームメーカー！' }
+        { name: '勇者', image: 'images/hero.png', title: '決戦兵器', description: '戦況を覆す一撃を放つパーティーの切り札！', specials: ['ウルトラショット', 'ウルトラチャクチ', 'トリプルトルネード']  },
+        { name: '戦士', image: 'images/warrior.png', title: '突撃隊長', description: '最前線を切り開き、道をこじ開ける鋼の肉体！', specials: ['ウルトラハンコ', 'カニタンク', 'テイオウイカ']  },
+        { name: '魔法使い', image: 'images/wizard.png', title: '戦場の魔術師', description: '盤面を支配し、予測不能のインクで敵を翻弄！', specials: ['メガホンレーザー5.1ch', 'スミナガシート', 'ショクワンダー', 'サメライド']  },
+        { name: '僧侶', image: 'images/monk.png', title: '守護神', description: '仲間を護り、チームを生かす勝利の要！', specials: ['グレートバリア', 'キューインキ', 'アメフラシ']  },
+        { name: '盗賊', image: 'images/thief.png', title: '影の追跡者', description: '撹乱と奇襲で戦場をかき乱すトリックスター！', specials: ['デコイチラシ', 'ホップソナー', 'ナイスダマ']  },
+        { name: '遊び人', image: 'images/player.png', title: '混沌の道化師', description: '笑いとインクで勝利を呼び込む運命のゲームメーカー！', specials: ['エナジースタンド', 'ジェットパック', 'マルチミサイル']  }
     ];
 
     const chaptersData = [
@@ -284,7 +284,14 @@ document.addEventListener('DOMContentLoaded', () => {
              <div class="p-4 text-center">
                 <p class="text-lg text-yellow-600 font-bold font-kiwi mb-2">${role.title}</p>
                 <p class="text-sm text-gray-600 h-12">${role.description}</p>
+                <div class="mt-4">
+                    <h4 class="font-bold text-sm text-center mb-2 text-gray-700">使えるスペシャル</h4>
+                    <ul class="text-sm text-center text-gray-600 space-y-1">
+                        ${role.specials.map(sp => `<li>${sp}</li>`).join('')}
+                    </ul>
+                </div>
             </div>
+
         `;
         rolesGrid.appendChild(card);
     });
