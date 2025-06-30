@@ -14,8 +14,6 @@
     <meta name="twitter:title" content="ばーばりあんず Splatoon3大会 2025夏'P' 冒険の書">
     <meta name="twitter:description" content="聖なる招待状を手に、君だけの冒険譚を紡げ">
     <meta name="twitter:image" content="images/ogimage.png">
-    <link rel="icon" href="images/x-icon.png" type="image/x-icon">
-
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,36 +65,17 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        .details {
-            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        .details.open {
-            max-height: 500px;
-            opacity: 1;
-        }
-        .chapter-line::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            bottom: 0;
-            width: 2px;
+        .journey-step-connector {
+            flex-grow: 1;
+            height: 2px;
             background-color: #e2e8f0;
         }
-        .chapter-dot::before {
-            content: '';
-            position: absolute;
-            left: 12px;
-            top: 12px;
-            width: 18px;
-            height: 18px;
-            border-radius: 9999px;
-            background-color: #D4AF37;
-            border: 3px solid #FDFDFB;
-            z-index: 10;
+        @media (max-width: 767px) {
+            .journey-step-connector {
+                width: 2px;
+                height: 3rem;
+                flex-grow: 0;
+            }
         }
     </style>
 </head>
@@ -110,8 +89,9 @@
                     <a href="#prologue" class="nav-link text-gray-600 hover:text-gray-900">序章</a>
                     <a href="#schedule" class="nav-link text-gray-600 hover:text-gray-900">冒険の旅程</a>
                     <a href="#roles" class="nav-link text-gray-600 hover:text-gray-900">伝説の役職</a>
+                    <a href="#matchups" class="nav-link text-gray-600 hover:text-gray-900">対戦形式</a>
                     <a href="#journey" class="nav-link text-gray-600 hover:text-gray-900">試練の行程</a>
-                    <a href="#matchups" class="nav-link text-gray-600 hover:text-gray-900">対戦組合せ</a>
+                    <a href="#oracle" class="nav-link text-gray-600 hover:text-gray-900">賢者の神託</a>
                     <a href="#endings" class="nav-link text-gray-600 hover:text-gray-900">運命の結末</a>
                 </div>
             </div>
@@ -159,7 +139,7 @@
                     <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月6日 (日)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">勇者発表</h3>
                     <p class="text-sm text-gray-600">
-                        GMがアンケートを元に各チームのリーダーとなる「勇者」を選定し、発表する。
+                        GMがアンケートを元に各チームのリーダーとなる「勇者」を6名選定し、発表する。
                     </p>
                 </div>
                 <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card">
@@ -190,36 +170,76 @@
             <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">伝説の役職</h2>
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <p class="text-gray-600 leading-relaxed">
-                    冒険に挑むため、君は6つの役職から1つを選択する。仲間との重複は不可。<br>
-                    パーティーのバランスが勝利の鍵だ！<br>
+                    冒険に挑むため、君は6つの役職から1つを選択する。仲間との重複は不可。パーティーのバランスが勝利の鍵だ！<br>
                     好きなブキと、役職ごとに定められたスペシャルウェポンで戦おう。
                 </p>
             </div>
             <div id="roles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             </div>
         </section>
-
-        <section id="journey" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">試練の行程</h2>
-             <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    君たちの冒険は、5つの試練に分かれている。各章の開幕と閉幕に響くGMのナレーションが、物語をドラマチックに演出する。
-                    各章をタップして、待ち受ける舞台を確認しよう。
-                </p>
-            </div>
-            <div id="chapters-list" class="max-w-3xl mx-auto relative">
-            </div>
-        </section>
         
         <section id="matchups" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">対戦組合せ</h2>
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">対戦形式：運命の天秤</h2>
             <div class="text-center max-w-2xl mx-auto mb-10">
                 <p class="text-gray-600 leading-relaxed">
-                    本大会は総当たりで執り行われる。各チャプターでの対戦相手は以下の通り。
-                    全てのライバルを打ち破り、頂点を目指せ。
+                    本大会の対戦は、勝利数が近いもの同士が相まみえる「スイスドロー」形式で執り行われる。
+                    全ての戦いが、君を頂へと導く道標となるのだ。
                 </p>
             </div>
-            <div id="matchups-table" class="overflow-x-auto bg-white rounded-lg shadow-md p-4">
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold font-kiwi mb-3 text-yellow-700">第一の試練：運命の導き</h3>
+                    <p class="text-sm text-gray-600">
+                        最初の対戦は、天秤の導きによりランダムに決定される。全ての冒険者に等しく、最初の扉が開かれる。
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold font-kiwi mb-3 text-yellow-700">第二の試練以降：魂の共鳴</h3>
+                    <p class="text-sm text-gray-600">
+                        二つ目の試練より、戦いの天秤が動き出す。勝利という同じ重みを持つ者同士が、互いの力を試し合う。強者はより強者と、敗者は再起をかけて、それぞれの道を進む。
+                    </p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold font-kiwi mb-3 text-yellow-700">王権への道</h3>
+                    <p class="text-sm text-gray-600">
+                        定められた全ての試練を終えた時、最も多くの勝利を積み重ねたパーティーが、真の王権への挑戦権を得る。
+                    </p>
+                </div>
+            </div>
+            <div class="text-center mt-10 max-w-2xl mx-auto">
+                <p class="text-sm text-gray-500 bg-gray-100 p-4 rounded-lg">
+                    <span class="font-bold">注：</span>対戦の組み合わせは、各チャプター（回戦）の開始時にGMより発表されます。
+                    本大会では任天堂公式の「タイカイサポート」機能を使用し、公正な組み合わせを自動で決定します。
+                </p>
+            </div>
+        </section>
+
+        <section id="journey" class="py-12 md:py-20">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">全5回戦の試練</h2>
+             <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="text-gray-600 leading-relaxed">
+                    君たちの冒険は、5つの試練に分かれている。各章（回戦）の開幕と閉幕に響くGMのナレーションが、物語をドラマチックに演出する。
+                </p>
+            </div>
+            <div id="journey-steps" class="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-0">
+            </div>
+        </section>
+
+        <section id="oracle" class="py-12 md:py-20">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">✨ 賢者の神託 ✨</h2>
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <p class="text-gray-600 leading-relaxed">
+                    冒険に悩みはつきもの。戦術や役職の立ち回りについて、天啓を授かりたい者は、賢者に問いかけるがよい。
+                    きっと、勝利への道筋が示されるであろう。
+                </p>
+            </div>
+            <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+                <textarea id="oracle-question" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" rows="3" placeholder="ここに賢者への質問を記入せよ... (例：勇者としてヤグラでどう立ち回ればいい？)"></textarea>
+                <button id="ask-oracle-btn" class="mt-4 w-full bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-colors duration-300 flex items-center justify-center disabled:bg-gray-400">
+                    <span id="oracle-btn-text">神託を授かる</span>
+                    <div id="oracle-loader" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-3"></div>
+                </button>
+                <div id="oracle-response" class="mt-6 p-4 bg-gray-100 rounded-md text-gray-700 hidden leading-relaxed whitespace-pre-wrap"></div>
             </div>
         </section>
 
@@ -254,29 +274,43 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
+    const specialIcons = {
+        'ウルトラショット': 'https://api.ikaclo.ink/images/weapons/special/special_027.png',
+        'ウルトラチャクチ': 'https://api.ikaclo.ink/images/weapons/special/special_042.png',
+        'トリプルトルネード': 'https://api.ikaclo.ink/images/weapons/special/special_030.png',
+        'ウルトラハンコ': 'https://api.ikaclo.ink/images/weapons/special/special_037.png',
+        'カニタンク': 'https://api.ikaclo.ink/images/weapons/special/special_024.png',
+        'テイオウイカ': 'https://api.ikaclo.ink/images/weapons/special/special_039.png',
+        'メガホンレーザー5.1ch': 'https://api.ikaclo.ink/images/weapons/special/special_028.png',
+        'スミナガシート': 'https://api.ikaclo.ink/images/weapons/special/special_041.png',
+        'ショクワンダー': 'https://api.ikaclo.ink/images/weapons/special/special_026.png',
+        'サメライド': 'https://api.ikaclo.ink/images/weapons/special/special_033.png',
+        'グレートバリア': 'https://api.ikaclo.ink/images/weapons/special/special_025.png',
+        'アメフラシ': 'https://api.ikaclo.ink/images/weapons/special/special_036.png',
+        'キューインキ': 'https://api.ikaclo.ink/images/weapons/special/special_029.png',
+        'デコイチラシ': 'https://api.ikaclo.ink/images/weapons/special/special_040.png',
+        'ホップソナー': 'https://api.ikaclo.ink/images/weapons/special/special_032.png',
+        'ナイスダマ': 'https://api.ikaclo.ink/images/weapons/special/special_038.png',
+        'ジェットパック': 'https://api.ikaclo.ink/images/weapons/special/special_035.png',
+        'マルチミサイル': 'https://api.ikaclo.ink/images/weapons/special/special_034.png',
+        'エナジースタンド': 'https://api.ikaclo.ink/images/weapons/special/special_031.png'
+    };
+
     const rolesData = [
-        { name: '勇者', image: 'images/hero.png', title: '決戦兵器', description: '戦況を覆す一撃を放つパーティーの切り札！', specials: ['ウルトラショット', 'ウルトラチャクチ', 'トリプルトルネード']  },
-        { name: '戦士', image: 'images/warrior.png', title: '突撃隊長', description: '最前線を切り開き、道をこじ開ける鋼の肉体！', specials: ['ウルトラハンコ', 'カニタンク', 'テイオウイカ']  },
-        { name: '魔法使い', image: 'images/wizard.png', title: '戦場の魔術師', description: '盤面を支配し、予測不能のインクで敵を翻弄！', specials: ['メガホンレーザー5.1ch', 'スミナガシート', 'ショクワンダー', 'サメライド']  },
-        { name: '僧侶', image: 'images/monk.png', title: '守護神', description: '仲間を護り、チームを生かす勝利の要！', specials: ['グレートバリア', 'キューインキ', 'アメフラシ']  },
-        { name: '盗賊', image: 'images/thief.png', title: '影の追跡者', description: '撹乱と奇襲で戦場をかき乱すトリックスター！', specials: ['デコイチラシ', 'ホップソナー', 'ナイスダマ']  },
-        { name: '遊び人', image: 'images/player.png', title: '混沌の道化師', description: '笑いとインクで勝利を呼び込む運命のゲームメーカー！', specials: ['エナジースタンド', 'ジェットパック', 'マルチミサイル']  }
+        { name: '勇者', image: 'images/hero_1.png', title: '決戦兵器', specials: ['ウルトラショット', 'ウルトラチャクチ', 'トリプルトルネード'] },
+        { name: '戦士', image: 'images/warrior_1.png', title: '突撃隊長', specials: ['ウルトラハンコ', 'カニタンク', 'テイオウイカ'] },
+        { name: '魔法使い', image: 'images/wizard_1.png', title: '戦場の魔術師', specials: ['メガホンレーザー5.1ch', 'スミナガシート', 'ショクワンダー', 'サメライド'] },
+        { name: '僧侶', image: 'images/monk_1.png', title: '守護神', specials: ['グレートバリア', 'アメフラシ', 'キューインキ'] },
+        { name: '盗賊', image: 'images/thief_1.png', title: '影の追跡者', specials: ['デコイチラシ', 'ホップソナー', 'ナイスダマ'] },
+        { name: '遊び人', image: 'images/player_1.png', title: '混沌の道化師', specials: ['ジェットパック', 'マルチミサイル', 'エナジースタンド'] }
     ];
 
     const chaptersData = [
-        { num: '第一章', name: '出発の丘', stage: 'ヒラメが丘団地', rule: 'エリア', theme: '「故郷の丘から冒険が始まる」' },
-        { num: '第二章', name: '山岳の試練', stage: 'ユノハナ大渓谷', rule: 'ヤグラ', theme: '「霧煙の谷を越え、高所を制圧せよ」' },
-        { num: '第三章', name: '封印の遺跡', stage: 'ナンプラー遺跡', rule: 'エリア', theme: '「古の神殿に封印された光を取り戻せ」' },
-        { num: '第四章', name: '海底の巨艦', stage: 'チョウザメ造船', rule: 'ヤグラ', theme: '「深海に沈む巨艦を奪還せよ」' },
-        { num: '第五章', name: '空への門', stage: 'カジキ空港', rule: 'エリア', theme: '「滑走路の先にある大空を掴み取れ」' }
-    ];
-    
-    const matchupsData = [
-        { chapter: 'チャプター①', matches: ['T1–T2', 'T3–T4', 'T5–T6'] },
-        { chapter: 'チャプター②', matches: ['T1–T3', 'T2–T5', 'T4–T6'] },
-        { chapter: 'チャプター③', matches: ['T1–T4', 'T2–T6', 'T3–T5'] },
-        { chapter: 'チャプター④', matches: ['T1–T5', 'T2–T3', 'T4–T6'] },
-        { chapter: 'チャプター⑤', matches: ['T1–T6', 'T2–T4', 'T3–T5'] },
+        { round: '第一回戦', name: '出発の丘', stage: 'ヒラメが丘団地', rule: 'エリア', theme: '「故郷の丘から冒険が始まる」', image: 'images/st1_hirame.jpg' },
+        { round: '第二回戦', name: '山岳の試練', stage: 'ユノハナ大渓谷', rule: 'ヤグラ', theme: '「霧煙の谷を越え、高所を制圧せよ」', image: 'images/st2_yunohana.jpg' },
+        { round: '第三回戦', name: '封印の遺跡', stage: 'ナンプラー遺跡', rule: 'エリア', theme: '「古の神殿に封印された光を取り戻せ」', image: 'images/st3_nampla.jpg' },
+        { round: '第四回戦', name: '海底の巨艦', stage: 'チョウザメ造船', rule: 'ヤグラ', theme: '「深海に沈む巨艦を奪還せよ」', image: 'images/st4_chouzame.jpg' },
+        { round: '第五回戦', name: '空への門', stage: 'カジキ空港', rule: 'エリア', theme: '「滑走路の先にある大空を掴み取れ」', image: 'images/st5_kajiki.jpg' }
     ];
 
     const endingsData = [
@@ -291,84 +325,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const rolesGrid = document.getElementById('roles-grid');
     rolesData.forEach(role => {
         const card = document.createElement('div');
-        card.className = 'card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300';
-        const placeholderUrl = `https://placehold.co/400x560/383838/FDFDFB?text=${encodeURIComponent(role.name)}`;
+        card.className = 'card bg-white rounded-lg shadow-lg overflow-hidden';
+        const placeholderUrl = `https://placehold.co/400x560/e9d8a6/383838?text=${encodeURIComponent(role.name)}`;
         card.innerHTML = `
             <img src="${role.image}" alt="${role.name}" class="w-full h-auto" onerror="this.onerror=null;this.src='${placeholderUrl}';">
-             <div class="p-4 text-center">
-                <p class="text-lg text-yellow-600 font-bold font-kiwi mb-2">${role.title}</p>
-                <p class="text-sm text-gray-600 h-12">${role.description}</p>
-                <div class="mt-4">
+             <div class="p-4 bg-amber-50">
+                 <h3 class="text-xl font-kiwi font-bold text-center text-gray-800">${role.name}</h3>
+                 <div class="mt-4">
                     <h4 class="font-bold text-sm text-center mb-2 text-gray-700">使えるスペシャル</h4>
-                    <ul class="text-sm text-center text-gray-600 space-y-1">
-                        ${role.specials.map(sp => `<li>${sp}</li>`).join('')}
-                    </ul>
+                    <div class="flex justify-center items-center space-x-2">
+                        ${role.specials.map(sp => `<img src="${specialIcons[sp]}" alt="${sp}" class="w-10 h-10" title="${sp}">`).join('')}
+                    </div>
                 </div>
             </div>
-
         `;
         rolesGrid.appendChild(card);
     });
 
-    const chaptersList = document.getElementById('chapters-list');
+    const journeyStepsContainer = document.getElementById('journey-steps');
     chaptersData.forEach((chapter, index) => {
-        const item = document.createElement('div');
-        item.className = 'relative pl-12 pb-8 chapter-line';
-        if (index === chaptersData.length - 1) {
-            item.classList.remove('chapter-line');
-        }
-        item.innerHTML = `
-            <div class="chapter-dot"></div>
-            <div class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <p class="text-sm font-bold text-yellow-600">${chapter.num}</p>
-                        <h3 class="text-2xl font-kiwi text-gray-800">${chapter.name}</h3>
-                    </div>
-                    <div class="text-2xl transform transition-transform duration-300">▼</div>
-                </div>
-                <div class="details mt-2">
-                    <p class="font-bold text-sm text-gray-700">舞台: <span class="font-normal text-gray-600">${chapter.stage}</span></p>
-                    <p class="font-bold text-sm text-gray-700">ルール: <span class="font-normal text-gray-600">${chapter.rule}</span></p>
-                    <p class="mt-4 italic text-gray-500">"${chapter.theme}"</p>
-                </div>
+        const step = document.createElement('div');
+        step.className = 'w-full md:w-1/5 p-2 flex flex-col';
+        step.innerHTML = `
+            <div class="bg-white p-4 rounded-lg shadow-md h-full flex flex-col items-center text-center card">
+                <img src="${chapter.image}" alt="${chapter.name}" class="w-full h-32 object-cover rounded-md mb-4">
+                <h4 class="font-bold text-md font-kiwi text-yellow-700">${chapter.round}</h4>
+                <p class="font-bold text-lg">${chapter.name}</p>
+                <p class="text-sm text-gray-600">${chapter.stage} / ${chapter.rule}</p>
+                <p class="text-xs italic mt-2 text-gray-500 flex-grow">"${chapter.theme}"</p>
             </div>
         `;
-        chaptersList.appendChild(item);
-        item.addEventListener('click', (e) => {
-            const details = item.querySelector('.details');
-            const arrow = item.querySelector('.transform');
-            const isOpen = details.classList.toggle('open');
-            if (arrow) {
-                arrow.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-            }
-        });
+        journeyStepsContainer.appendChild(step);
+
+        if (index < chaptersData.length - 1) {
+            const connector = document.createElement('div');
+            connector.className = 'journey-step-connector';
+            journeyStepsContainer.appendChild(connector);
+        }
     });
 
-    const matchupsTableContainer = document.getElementById('matchups-table');
-    const table = document.createElement('table');
-    table.className = 'w-full text-sm text-left text-gray-500';
-    table.innerHTML = `
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3">チャプター</th>
-                <th scope="col" class="px-6 py-3">第1試合</th>
-                <th scope="col" class="px-6 py-3">第2試合</th>
-                <th scope="col" class="px-6 py-3">第3試合</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${matchupsData.map(row => `
-                <tr class="bg-white border-b hover:bg-gray-50">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">${row.chapter}</th>
-                    <td class="px-6 py-4">${row.matches[0]}</td>
-                    <td class="px-6 py-4">${row.matches[1]}</td>
-                    <td class="px-6 py-4">${row.matches[2]}</td>
-                </tr>
-            `).join('')}
-        </tbody>
-    `;
-    matchupsTableContainer.appendChild(table);
 
     const endingsGrid = document.getElementById('endings-grid');
     endingsData.forEach(ending => {
@@ -388,6 +383,65 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-xs text-gray-500 mt-1 italic">「${ending.description}」</p>
         `;
         endingsGrid.appendChild(card);
+    });
+    
+    // Gemini API Interaction
+    const askOracleBtn = document.getElementById('ask-oracle-btn');
+    const oracleQuestion = document.getElementById('oracle-question');
+    const oracleResponseEl = document.getElementById('oracle-response');
+    const oracleBtnText = document.getElementById('oracle-btn-text');
+    const oracleLoader = document.getElementById('oracle-loader');
+
+    askOracleBtn.addEventListener('click', async () => {
+        const question = oracleQuestion.value.trim();
+        if (!question) {
+            oracleResponseEl.textContent = '賢者への問いが聞こえぬ...。質問を記入するがよい。';
+            oracleResponseEl.classList.remove('hidden');
+            return;
+        }
+
+        oracleBtnText.textContent = '神託を待て...';
+        oracleLoader.classList.remove('hidden');
+        askOracleBtn.disabled = true;
+        oracleResponseEl.classList.add('hidden');
+
+        const prompt = `あなたは賢者の神託です。以下のスプラトゥーン3に関する質問に対して、TRPGの賢者のような、荘厳で少し古風な口調で、戦略的なアドバイスを与えなさい。回答は必ず150文字以内で簡潔にまとめてください。\n\n質問：${question}`;
+        
+        try {
+             let chatHistory = [];
+             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+             const payload = { contents: chatHistory };
+             const apiKey = "";
+             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+             
+             const response = await fetch(apiUrl, {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(payload)
+             });
+             
+             if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+             }
+
+             const result = await response.json();
+             
+             let text = '神託は得られなかった...。しばし時を置いて、再び問いかけるがよい。';
+             if (result.candidates && result.candidates.length > 0 &&
+                 result.candidates[0].content && result.candidates[0].content.parts &&
+                 result.candidates[0].content.parts.length > 0) {
+                 text = result.candidates[0].content.parts[0].text;
+             }
+             oracleResponseEl.textContent = text;
+        } catch (error) {
+            console.error("Error calling Gemini API:", error);
+            oracleResponseEl.textContent = '賢者との交信に失敗した...。しばし時を置いて、再び問いかけるがよい。';
+        } finally {
+            oracleBtnText.textContent = '神託を授かる';
+            oracleLoader.classList.add('hidden');
+            askOracleBtn.disabled = false;
+            oracleResponseEl.classList.remove('hidden');
+        }
     });
 
     const navLinks = document.querySelectorAll('nav a');
