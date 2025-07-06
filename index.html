@@ -44,6 +44,7 @@
             font-family: 'Noto Sans JP', sans-serif;
             background-color: #FDFDFB;
             color: #383838;
+            overflow-x: hidden;
         }
         .font-kiwi {
             font-family: 'Kiwi Maru', serif;
@@ -52,6 +53,7 @@
             background-image:
                 radial-gradient(circle at center, rgba(0,0,0,0.03) 1px, transparent 1px);
             background-size: 20px 20px;
+            transition: background-position 0.1s linear;
         }
         .scroll-smooth {
             scroll-behavior: smooth;
@@ -93,9 +95,66 @@
                 flex-grow: 0;
             }
         }
+        .animated-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animated-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .logo-container {
+            position: relative;
+        }
+        .logo-main {
+            transform: scale(0);
+            opacity: 0;
+            animation: pop-in 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0.5s forwards;
+        }
+        .ink-splat {
+            position: absolute;
+            background-color: #8A2BE2; /* 紫 */
+            border-radius: 50%;
+            transform: scale(0);
+            opacity: 0;
+            animation: burst 0.8s ease-out forwards;
+        }
+        .ink-splat.yellow {
+            background-color: #FFD700; /* 黄色 */
+        }
+        @keyframes pop-in {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes burst {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .animated-title span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: letter-fade-in 0.5s forwards;
+        }
+        @keyframes letter-fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .parallax-splat {
+            position: absolute;
+            background-color: rgba(212, 175, 55, 0.2);
+            border-radius: 50%;
+            transition: transform 0.2s ease-out;
+            will-change: transform;
+        }
     </style>
 </head>
-<body class="scroll-smooth bg-pattern">
+<body class="bg-pattern">
+    <div id="parallax-container" class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden"></div>
 
     <header class="sticky top-0 bg-white/80 backdrop-blur-sm z-50 shadow-md">
         <nav class="container mx-auto px-4">
@@ -118,16 +177,16 @@
     <main class="container mx-auto px-4 py-8 md:py-16">
         
         <section id="top" class="text-center py-16 md:py-24 border-b-2 border-dashed border-gray-300">
-            <div class="max-w-2xl mx-auto mb-8">
-                <img src="images/title.png" alt="PARABLE CUP Logo" class="w-full h-auto">
+            <div class="max-w-2xl mx-auto mb-8 logo-container">
+                <img src="images/title.png" alt="PARABLE CUP Logo" class="w-full h-auto logo-main">
             </div>
-            <h1 class="font-kiwi text-4xl md:text-5xl font-bold my-4 text-gray-800">ばーばりあんず Splatoon3大会 2025夏 "PARABLE CUP"</h1>
-            <p class="text-lg md:text-xl text-gray-600 mt-2">～君だけの冒険譚を、その手で紡げ～</p>
+            <h1 id="main-title" class="font-kiwi text-4xl md:text-5xl font-bold my-4 text-gray-800"></h1>
+            <p id="sub-title" class="text-lg md:text-xl text-gray-600 mt-2"></p>
         </section>
 
         <section id="prologue" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-8 text-gray-800">序章：冒険への誘い</h2>
-            <div class="max-w-3xl mx-auto bg-amber-50/50 p-8 rounded-lg border border-amber-200 shadow-sm text-center">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-8 text-gray-800 animated-element">序章：冒険への誘い</h2>
+            <div class="max-w-3xl mx-auto bg-amber-50/50 p-8 rounded-lg border border-amber-200 shadow-sm text-center animated-element">
                 <p class="text-2xl font-kiwi leading-relaxed text-gray-700">
                     “君たちはそれぞれの地で名を馳せた冒険者──”
                 </p>
@@ -149,36 +208,30 @@
         </section>
         
         <section id="schedule" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">冒険の旅程</h2>
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    聖なる旅路は、定められた運命の日に従って進行する。
-                    各日程を心に刻み、冒険の始まりに備えよ。
-                </p>
-            </div>
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">冒険の旅程</h2>
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card">
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card animated-element">
                     <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月6日 (日)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">勇者発表</h3>
                     <p class="text-sm text-gray-600">
                         GMがアンケートを元に各チームのリーダーとなる「勇者」を4名選定し、発表する。
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card">
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card animated-element" style="transition-delay: 0.1s;">
                      <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月7日 (月)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">運命のドラフト</h3>
                     <p class="text-sm text-gray-600">
                         選ばれし勇者たちが、共に戦う仲間を1名だけ指名する。指名が重複した場合、希望役職の近さやルーレットで運命が決まる。
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card">
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card animated-element" style="transition-delay: 0.2s;">
                      <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月8日 (火)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">パーティー結成</h3>
                     <p class="text-sm text-gray-600">
                         ドラフトを経て、最終的な4人パーティーが決定。全4チームがここに誕生する。
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-red-500 card">
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-red-500 card animated-element" style="transition-delay: 0.3s;">
                      <p class="font-kiwi text-xl font-bold text-red-600 mb-2">7月13日 (日)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">大会当日</h3>
                     <p class="text-sm text-gray-600">
@@ -189,8 +242,8 @@
         </section>
 
         <section id="rules" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">冒険の掟</h2>
-            <div class="max-w-2xl mx-auto bg-amber-50/50 p-8 rounded-lg border border-amber-200 shadow-sm">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">冒険の掟</h2>
+            <div class="max-w-2xl mx-auto bg-amber-50/50 p-8 rounded-lg border border-amber-200 shadow-sm animated-element">
                 <h3 class="text-xl font-bold font-kiwi mb-4 text-center">ブキの固定と提出</h3>
                 <p class="text-gray-600 leading-relaxed mb-4">
                     本大会では、各冒険者は大会開始前に提出した一つのブキのみで、全ての試練に挑むこととなる。これは、各々の役職を全うするための重要な掟である。
@@ -209,46 +262,34 @@
         </section>
 
         <section id="roles" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">伝説の役職</h2>
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    冒険に挑むため、君は6つの役職から1つを選択する。仲間との重複は不可。パーティーのバランスが勝利の鍵だ！<br>
-                    好きなブキと、役職ごとに定められたスペシャルウェポンで戦おう。
-                </p>
-            </div>
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">伝説の役職</h2>
             <div id="roles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             </div>
         </section>
         
         <section id="matchups" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">対戦形式：運命の天秤</h2>
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    本大会の対戦は、勝利数が近いもの同士が相まみえる「スイスドロー」形式で執り行われる。
-                    全ての戦いが、君を頂へと導く道標となるのだ。
-                </p>
-            </div>
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">対戦形式：運命の天秤</h2>
             <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-white p-6 rounded-lg shadow-md animated-element">
                     <h3 class="text-xl font-bold font-kiwi mb-3 text-yellow-700">第一の試練：運命の導き</h3>
                     <p class="text-sm text-gray-600">
                         最初の対戦は、天秤の導きによりランダムに決定される。全ての冒険者に等しく、最初の扉が開かれる。
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-white p-6 rounded-lg shadow-md animated-element" style="transition-delay: 0.1s;">
                     <h3 class="text-xl font-bold font-kiwi mb-3 text-yellow-700">第二の試練以降：魂の共鳴</h3>
                     <p class="text-sm text-gray-600">
                         二つ目の試練より、戦いの天秤が動き出す。勝利という同じ重みを持つ者同士が、互いの力を試し合う。強者はより強者と、敗者は再起をかけて、それぞれの道を進む。
                     </p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="bg-white p-6 rounded-lg shadow-md animated-element" style="transition-delay: 0.2s;">
                     <h3 class="text-xl font-bold font-kiwi mb-3 text-yellow-700">王権への道</h3>
                     <p class="text-sm text-gray-600">
                         定められた全ての試練を終えた時、最も多くの勝利を積み重ねたパーティーが、真の王権への挑戦権を得る。
                     </p>
                 </div>
             </div>
-            <div class="text-center mt-10 max-w-2xl mx-auto">
+            <div class="text-center mt-10 max-w-2xl mx-auto animated-element">
                 <p class="text-sm text-gray-500 bg-gray-100 p-4 rounded-lg">
                     <span class="font-bold">注：</span>対戦の組み合わせは、各チャプター（回戦）の開始時にGMより発表されます。
                     本大会では任天堂公式の「タイカイサポート」機能を使用し、公正な組み合わせを自動で決定します。
@@ -257,23 +298,25 @@
         </section>
 
         <section id="journey" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">全5回戦の試練</h2>
-             <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    君たちの冒険は、5つの試練に分かれている。各章（回戦）の開幕と閉幕に響くGMのナレーションが、物語をドラマチックに演出する。
-                </p>
-            </div>
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">全5回戦の試練</h2>
             <div id="journey-steps" class="flex flex-col md:flex-row items-stretch justify-center gap-4 md:gap-0">
             </div>
         </section>
 
-        <section id="endings" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800">運命の結末</h2>
-            <div class="text-center max-w-2xl mx-auto mb-10">
-                <p class="text-gray-600 leading-relaxed">
-                    全ての戦いを終えた時、君たちを待つ運命とは…？ 最終順位に応じて、物語の結末と、栄光を刻む記念撮影の舞台が変化する！
-                </p>
+        <section id="oracle" class="py-12 md:py-20">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">✨ 賢者の神託 ✨</h2>
+            <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md animated-element">
+                <textarea id="oracle-question" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" rows="3" placeholder="ここに賢者への質問を記入せよ... (例：勇者としてヤグラでどう立ち回ればいい？)"></textarea>
+                <button id="ask-oracle-btn" class="mt-4 w-full bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-colors duration-300 flex items-center justify-center disabled:bg-gray-400">
+                    <span id="oracle-btn-text">神託を授かる</span>
+                    <div id="oracle-loader" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-3"></div>
+                </button>
+                <div id="oracle-response" class="mt-6 p-4 bg-gray-100 rounded-md text-gray-700 hidden leading-relaxed whitespace-pre-wrap"></div>
             </div>
+        </section>
+
+        <section id="endings" class="py-12 md:py-20">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">運命の結末</h2>
             <div id="endings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
         </section>
@@ -333,9 +376,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const rolesGrid = document.getElementById('roles-grid');
-    rolesData.forEach(role => {
+    rolesData.forEach((role, index) => {
         const card = document.createElement('div');
-        card.className = 'card bg-white rounded-lg shadow-lg overflow-hidden';
+        card.className = 'card bg-white rounded-lg shadow-lg overflow-hidden animated-element';
+        card.style.transitionDelay = `${index * 0.1}s`;
         const placeholderUrl = `https://placehold.co/400x560/e9d8a6/383838?text=${encodeURIComponent(role.name)}`;
         card.innerHTML = `
             <img src="${role.image}" alt="${role.name}" class="w-full h-auto" onerror="this.onerror=null;this.src='${placeholderUrl}';">
@@ -355,7 +399,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const journeyStepsContainer = document.getElementById('journey-steps');
     chaptersData.forEach((chapter, index) => {
         const step = document.createElement('div');
-        step.className = 'w-full md:w-1/5 p-2 flex flex-col';
+        step.className = 'w-full md:w-1/5 p-2 flex flex-col animated-element';
+        step.style.transitionDelay = `${index * 0.1}s`;
         step.innerHTML = `
             <div class="bg-white p-4 rounded-lg shadow-md h-full flex flex-col items-center text-center card">
                 <img src="${chapter.image}" alt="${chapter.name}" class="w-full h-32 object-cover rounded-md mb-4">
@@ -369,16 +414,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (index < chaptersData.length - 1) {
             const connector = document.createElement('div');
-            connector.className = 'journey-step-connector';
+            connector.className = 'journey-step-connector animated-element';
+            connector.style.transitionDelay = `${index * 0.1 + 0.05}s`;
             journeyStepsContainer.appendChild(connector);
         }
     });
 
 
     const endingsGrid = document.getElementById('endings-grid');
-    endingsData.forEach(ending => {
+    endingsData.forEach((ending, index) => {
         const card = document.createElement('div');
-        card.className = 'bg-white rounded-lg shadow p-6 text-center border-t-4';
+        card.className = 'bg-white rounded-lg shadow p-6 text-center border-t-4 animated-element';
+        card.style.transitionDelay = `${index * 0.1}s`;
         let borderColorClass = 'border-gray-300';
         if (ending.rank === '1位') borderColorClass = 'border-yellow-400';
         if (ending.rank === '2位') borderColorClass = 'border-blue-300';
@@ -394,6 +441,137 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         endingsGrid.appendChild(card);
     });
+    
+    // Gemini API Interaction
+    const askOracleBtn = document.getElementById('ask-oracle-btn');
+    const oracleQuestion = document.getElementById('oracle-question');
+    const oracleResponseEl = document.getElementById('oracle-response');
+    const oracleBtnText = document.getElementById('oracle-btn-text');
+    const oracleLoader = document.getElementById('oracle-loader');
+
+    askOracleBtn.addEventListener('click', async () => {
+        const question = oracleQuestion.value.trim();
+        if (!question) {
+            oracleResponseEl.textContent = '賢者への問いが聞こえぬ...。質問を記入するがよい。';
+            oracleResponseEl.classList.remove('hidden');
+            return;
+        }
+
+        oracleBtnText.textContent = '神託を待て...';
+        oracleLoader.classList.remove('hidden');
+        askOracleBtn.disabled = true;
+        oracleResponseEl.classList.add('hidden');
+
+        const prompt = `あなたは賢者の神託です。以下のスプラトゥーン3に関する質問に対して、TRPGの賢者のような、荘厳で少し古風な口調で、戦略的なアドバイスを与えなさい。回答は必ず150文字以内で簡潔にまとめてください。\n\n質問：${question}`;
+        
+        try {
+             let chatHistory = [];
+             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+             const payload = { contents: chatHistory };
+             const apiKey = "";
+             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+             
+             const response = await fetch(apiUrl, {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(payload)
+             });
+             
+             if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+             }
+
+             const result = await response.json();
+             
+             let text = '神託は得られなかった...。しばし時を置いて、再び問いかけるがよい。';
+             if (result.candidates && result.candidates.length > 0 &&
+                 result.candidates[0].content && result.candidates[0].content.parts &&
+                 result.candidates[0].content.parts.length > 0) {
+                 text = result.candidates[0].content.parts[0].text;
+             }
+             oracleResponseEl.textContent = text;
+        } catch (error) {
+            console.error("Error calling Gemini API:", error);
+            oracleResponseEl.textContent = '賢者との交信に失敗した...。しばし時を置いて、再び問いかけるがよい。';
+        } finally {
+            oracleBtnText.textContent = '神託を授かる';
+            oracleLoader.classList.add('hidden');
+            askOracleBtn.disabled = false;
+            oracleResponseEl.classList.remove('hidden');
+        }
+    });
+
+    // Scroll Animations
+    const animatedElements = document.querySelectorAll('.animated-element');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    animatedElements.forEach(el => {
+        observer.observe(el);
+    });
+
+    // Parallax background
+    const parallaxContainer = document.getElementById('parallax-container');
+    for (let i = 0; i < 20; i++) {
+        const splat = document.createElement('div');
+        splat.className = 'parallax-splat';
+        const size = Math.random() * 50 + 20;
+        splat.style.width = `${size}px`;
+        splat.style.height = `${size}px`;
+        splat.style.top = `${Math.random() * 100}%`;
+        splat.style.left = `${Math.random() * 100}%`;
+        splat.dataset.speed = Math.random() * 0.5 + 0.1;
+        parallaxContainer.appendChild(splat);
+    }
+    const parallaxSplats = document.querySelectorAll('.parallax-splat');
+
+    window.addEventListener('scroll', () => {
+        const yPos = -window.pageYOffset / 10;
+        document.body.style.backgroundPosition = `0 ${yPos}px`;
+        
+        parallaxSplats.forEach(splat => {
+            const speed = splat.dataset.speed;
+            const y = -window.pageYOffset * speed;
+            splat.style.transform = `translateY(${y}px)`;
+        });
+    });
+
+    // Title animation
+    const mainTitle = document.getElementById('main-title');
+    const subTitle = document.getElementById('sub-title');
+    const mainTitleText = 'ばーばりあんず Splatoon3大会 2025夏 "PARABLE CUP"';
+    const subTitleText = '～君だけの冒険譚を、その手で紡げ～';
+
+    mainTitle.innerHTML = mainTitleText.split('').map(char => `<span>${char}</span>`).join('');
+    subTitle.innerHTML = subTitleText.split('').map(char => `<span>${char}</span>`).join('');
+
+    Array.from(mainTitle.children).forEach((span, index) => {
+        span.style.animationDelay = `${1.0 + index * 0.03}s`;
+    });
+    Array.from(subTitle.children).forEach((span, index) => {
+        span.style.animationDelay = `${1.0 + mainTitleText.length * 0.03 + index * 0.03}s`;
+    });
+
+    // Logo burst animation
+    const logoContainer = document.querySelector('.logo-container');
+    for (let i = 0; i < 12; i++) {
+        const splat = document.createElement('div');
+        splat.className = `ink-splat ${i % 2 === 0 ? 'yellow' : ''}`;
+        const angle = (i / 12) * 360;
+        const radius = 50;
+        splat.style.top = `calc(50% + ${Math.sin(angle * Math.PI / 180) * radius}%)`;
+        splat.style.left = `calc(50% + ${Math.cos(angle * Math.PI / 180) * radius}%)`;
+        splat.style.animationDelay = `${Math.random() * 0.3}s`;
+        logoContainer.appendChild(splat);
+    }
     
     const navLinks = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('main section');
