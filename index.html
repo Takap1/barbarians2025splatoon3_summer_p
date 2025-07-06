@@ -303,18 +303,6 @@
             </div>
         </section>
 
-        <section id="oracle" class="py-12 md:py-20">
-            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">✨ 賢者の神託 ✨</h2>
-            <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md animated-element">
-                <textarea id="oracle-question" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-400 focus:outline-none" rows="3" placeholder="ここに賢者への質問を記入せよ... (例：勇者としてヤグラでどう立ち回ればいい？)"></textarea>
-                <button id="ask-oracle-btn" class="mt-4 w-full bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-yellow-700 transition-colors duration-300 flex items-center justify-center disabled:bg-gray-400">
-                    <span id="oracle-btn-text">神託を授かる</span>
-                    <div id="oracle-loader" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin ml-3"></div>
-                </button>
-                <div id="oracle-response" class="mt-6 p-4 bg-gray-100 rounded-md text-gray-700 hidden leading-relaxed whitespace-pre-wrap"></div>
-            </div>
-        </section>
-
         <section id="endings" class="py-12 md:py-20">
             <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">運命の結末</h2>
             <div id="endings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -440,65 +428,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="text-xs text-gray-500 mt-1 italic">「${ending.description}」</p>
         `;
         endingsGrid.appendChild(card);
-    });
-    
-    // Gemini API Interaction
-    const askOracleBtn = document.getElementById('ask-oracle-btn');
-    const oracleQuestion = document.getElementById('oracle-question');
-    const oracleResponseEl = document.getElementById('oracle-response');
-    const oracleBtnText = document.getElementById('oracle-btn-text');
-    const oracleLoader = document.getElementById('oracle-loader');
-
-    askOracleBtn.addEventListener('click', async () => {
-        const question = oracleQuestion.value.trim();
-        if (!question) {
-            oracleResponseEl.textContent = '賢者への問いが聞こえぬ...。質問を記入するがよい。';
-            oracleResponseEl.classList.remove('hidden');
-            return;
-        }
-
-        oracleBtnText.textContent = '神託を待て...';
-        oracleLoader.classList.remove('hidden');
-        askOracleBtn.disabled = true;
-        oracleResponseEl.classList.add('hidden');
-
-        const prompt = `あなたは賢者の神託です。以下のスプラトゥーン3に関する質問に対して、TRPGの賢者のような、荘厳で少し古風な口調で、戦略的なアドバイスを与えなさい。回答は必ず150文字以内で簡潔にまとめてください。\n\n質問：${question}`;
-        
-        try {
-             let chatHistory = [];
-             chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-             const payload = { contents: chatHistory };
-             const apiKey = "";
-             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-             
-             const response = await fetch(apiUrl, {
-                 method: 'POST',
-                 headers: { 'Content-Type': 'application/json' },
-                 body: JSON.stringify(payload)
-             });
-             
-             if (!response.ok) {
-                throw new Error(`API error: ${response.status}`);
-             }
-
-             const result = await response.json();
-             
-             let text = '神託は得られなかった...。しばし時を置いて、再び問いかけるがよい。';
-             if (result.candidates && result.candidates.length > 0 &&
-                 result.candidates[0].content && result.candidates[0].content.parts &&
-                 result.candidates[0].content.parts.length > 0) {
-                 text = result.candidates[0].content.parts[0].text;
-             }
-             oracleResponseEl.textContent = text;
-        } catch (error) {
-            console.error("Error calling Gemini API:", error);
-            oracleResponseEl.textContent = '賢者との交信に失敗した...。しばし時を置いて、再び問いかけるがよい。';
-        } finally {
-            oracleBtnText.textContent = '神託を授かる';
-            oracleLoader.classList.add('hidden');
-            askOracleBtn.disabled = false;
-            oracleResponseEl.classList.remove('hidden');
-        }
     });
 
     // Scroll Animations
