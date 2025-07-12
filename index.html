@@ -182,6 +182,7 @@
                     <a href="#matchups" class="nav-link text-gray-600 hover:text-gray-900">対戦形式</a>
                     <a href="#journey" class="nav-link text-gray-600 hover:text-gray-900">試練の行程</a>
                     <a href="#faq" class="nav-link text-gray-600 hover:text-gray-900">よくある質問</a>
+                    <a href="#oracle" class="nav-link text-gray-600 hover:text-gray-900">賢者の神託</a>
                     <a href="#endings" class="nav-link text-gray-600 hover:text-gray-900">運命の結末</a>
                 </div>
             </div>
@@ -379,6 +380,10 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: '遊び人', image: 'images/player_3.png', title: '混沌の道化師', specials: ['ジェットパック', 'マルチミサイル', 'エナジースタンド'] }
     ];
 
+    const roleEmojis = {
+        '勇者': '🛡️', '戦士': '⚔️', '魔法使い': '🧙', '僧侶': '❤️', '盗賊': '🗡️', '遊び人': '🤡'
+    };
+
     const teamsData = [
         { name: 'Aチーム', roles: ['勇者', '魔法使い', '僧侶', '遊び人'] },
         { name: 'Bチーム', roles: ['勇者', '戦士', '魔法使い', '盗賊'] },
@@ -438,17 +443,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3 class="text-2xl font-kiwi font-bold text-center text-yellow-700 mb-4">${team.name}</h3>
             <div class="space-y-2">
                 ${team.roles.map(roleName => {
-                    const roleInfo = rolesData.find(r => r.name === roleName);
                     return `<div class="flex items-center p-2 bg-amber-50 rounded-md">
-                                <span class="text-2xl mr-3">${roleInfo ? `<img src="${roleInfo.image.replace('_3.png', '_icon.png')}" class="w-8 h-8" alt="${roleInfo.name}">` : ''}</span>
+                                <span class="text-2xl mr-3">${roleEmojis[roleName] || '❓'}</span>
                                 <span class="font-bold text-gray-800">${roleName}</span>
                             </div>`
                 }).join('')}
             </div>
         `;
-        // A temporary solution for role icons. Ideally, you'd have separate icon files.
-        // I'm replacing the image path to a hypothetical icon path.
-        // Please replace 'images/hero_3.png' with 'images/hero_icon.png' etc.
         teamsGrid.appendChild(card);
     });
 
