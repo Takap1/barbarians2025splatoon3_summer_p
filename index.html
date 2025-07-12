@@ -151,6 +151,15 @@
             transition: transform 0.2s ease-out;
             will-change: transform;
         }
+        .faq-item details > summary {
+            list-style: none;
+        }
+        .faq-item details > summary::-webkit-details-marker {
+            display: none;
+        }
+        .faq-item details[open] summary .arrow {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="bg-pattern">
@@ -167,6 +176,7 @@
                     <a href="#roles" class="nav-link text-gray-600 hover:text-gray-900">伝説の役職</a>
                     <a href="#matchups" class="nav-link text-gray-600 hover:text-gray-900">対戦形式</a>
                     <a href="#journey" class="nav-link text-gray-600 hover:text-gray-900">試練の行程</a>
+                    <a href="#faq" class="nav-link text-gray-600 hover:text-gray-900">よくある質問</a>
                     <a href="#oracle" class="nav-link text-gray-600 hover:text-gray-900">賢者の神託</a>
                     <a href="#endings" class="nav-link text-gray-600 hover:text-gray-900">運命の結末</a>
                 </div>
@@ -239,6 +249,20 @@
                     </p>
                 </div>
             </div>
+             <div class="max-w-2xl mx-auto mt-12 animated-element">
+                <h3 class="font-kiwi text-2xl text-center font-medium mb-6 text-gray-800">当日のタイムテーブル</h3>
+                <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-red-500">
+                    <ul class="space-y-4">
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">19:50</span><span>チェックイン開始（大会使用ブキのスクリーンショットを提出）</span></li>
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">19:55</span><span>全体VCに集合</span></li>
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">20:00</span><span>オープニング、ルール説明</span></li>
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">20:10頃</span><span>大会開始（全5回戦）</span></li>
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">22:10頃</span><span>エンディング、成績発表</span></li>
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">22:20頃</span><span>各チーム写真撮影タイム</span></li>
+                        <li class="flex items-start"><span class="font-bold text-red-600 w-24">22:30</span><span>終了予定</span></li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
         <section id="rules" class="py-12 md:py-20">
@@ -303,6 +327,12 @@
             </div>
         </section>
 
+        <section id="faq" class="py-12 md:py-20">
+            <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">冒険者の心得 (よくある質問)</h2>
+            <div id="faq-container" class="max-w-2xl mx-auto space-y-4">
+            </div>
+        </section>
+        
         <section id="endings" class="py-12 md:py-20">
             <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">運命の結末</h2>
             <div id="endings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -361,6 +391,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { rank: '2位', name: 'セカンドエンディング', icon: '✨', location: 'オヒョウ海運ターミナル', description: '荒波越えの港で誓い合う、誇り高き結末。' },
         { rank: '3位', name: 'サードエンディング', icon: '🍜', location: 'バイガイ亭', description: 'ラーメン屋で一息つく、仲間との絆の結末。' },
         { rank: '4位', name: 'ノーマルエンディング', icon: '🏡', location: 'ヒラメが丘団地', description: '故郷へ帰還する、懐かしくもほろ苦い結末。' }
+    ];
+
+    const faqData = [
+        { q: '試合形式はbo3ですか？', a: 'はい。1ラウンドごとに最多3試合、2勝したチームの勝利となります。全5ラウンドで、スイスドロー形式のため、2ラウンド以降は勝利数が近いチーム同士での対戦となります。' },
+        { q: '大会期間中、ゲーム内はフェス開催中となりますが、フクは固定ですか？', a: 'いいえ、フクは自由です。タイカイサポート機能を使用するため、プライベートマッチの部屋に入るたびにフクを変更できます。ただし、ロビーに戻るとフェスTに強制変更されるので、試合ごとに着替え直す必要があります。' },
+        { q: '大会の開催時間はどれくらいですか？', a: '約2時間半を予定しています（20:00開始～22:30終了目安）。進行状況により多少前後する可能性があります。' },
+        { q: 'ラウンドごとのルール・ステージは2試合目・3試合目も同じ？', a: 'はい、同じです。1つのラウンド（最大3試合）では、ルールとステージは変わりません。1試合目の結果を踏まえて、作戦を練り直すことが可能です。' }
     ];
 
     const rolesGrid = document.getElementById('roles-grid');
@@ -429,6 +466,26 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         endingsGrid.appendChild(card);
     });
+    
+    const faqContainer = document.getElementById('faq-container');
+    faqData.forEach((faq, index) => {
+        const item = document.createElement('div');
+        item.className = 'faq-item bg-white rounded-lg shadow-sm animated-element';
+        item.style.transitionDelay = `${index * 0.1}s`;
+        item.innerHTML = `
+            <details class="p-4">
+                <summary class="font-bold font-kiwi text-lg cursor-pointer flex justify-between items-center">
+                    <span>Q. ${faq.q}</span>
+                    <span class="arrow text-yellow-600 transform transition-transform duration-300">▼</span>
+                </summary>
+                <div class="mt-4 text-gray-600 leading-relaxed border-t pt-4">
+                   <span class="font-bold text-lg text-yellow-700 mr-2">A.</span>${faq.a}
+                </div>
+            </details>
+        `;
+        faqContainer.appendChild(item);
+    });
+
 
     // Scroll Animations
     const animatedElements = document.querySelectorAll('.animated-element');
