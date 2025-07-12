@@ -160,6 +160,13 @@
         .faq-item details[open] summary .arrow {
             transform: rotate(180deg);
         }
+        .completed-card {
+            opacity: 0.6;
+            filter: grayscale(80%);
+        }
+        .completed-card .completed-badge {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-pattern">
@@ -220,28 +227,31 @@
         <section id="schedule" class="py-12 md:py-20">
             <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">冒険の旅程</h2>
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card animated-element">
-                    <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月6日 (日)</p>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gray-300 card animated-element completed-card">
+                    <p class="font-kiwi text-xl font-bold text-gray-500 mb-2">7月6日 (日)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">勇者発表</h3>
                     <p class="text-sm text-gray-600">
                         GMがアンケートを元に各チームのリーダーとなる「勇者」を4名選定し、発表する。
                     </p>
+                    <span class="completed-badge absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">完了</span>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card animated-element" style="transition-delay: 0.1s;">
-                     <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月7日 (月)</p>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gray-300 card animated-element completed-card" style="transition-delay: 0.1s;">
+                     <p class="font-kiwi text-xl font-bold text-gray-500 mb-2">7月7日 (月)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">運命のドラフト</h3>
                     <p class="text-sm text-gray-600">
                         選ばれし勇者たちが、共に戦う仲間を1名だけ指名する。指名が重複した場合、希望役職の近さやルーレットで運命が決まる。
                     </p>
+                    <span class="completed-badge absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">完了</span>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-yellow-400 card animated-element" style="transition-delay: 0.2s;">
-                     <p class="font-kiwi text-xl font-bold text-yellow-600 mb-2">7月8日 (火)</p>
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gray-300 card animated-element completed-card" style="transition-delay: 0.2s;">
+                     <p class="font-kiwi text-xl font-bold text-gray-500 mb-2">7月8日 (火)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">パーティー結成</h3>
                     <p class="text-sm text-gray-600">
                         ドラフトを経て、最終的な4人パーティーが決定。全4チームがここに誕生する。
                     </p>
+                    <span class="completed-badge absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">完了</span>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-red-500 card animated-element" style="transition-delay: 0.3s;">
+                <div class="bg-white p-6 rounded-lg shadow-lg border-t-4 border-red-500 card animated-element animate-pulse" style="transition-delay: 0.3s;">
                      <p class="font-kiwi text-xl font-bold text-red-600 mb-2">7月13日 (日)</p>
                     <h3 class="text-xl font-bold font-kiwi mb-2">大会当日</h3>
                     <p class="text-sm text-gray-600">
@@ -332,7 +342,7 @@
             <div id="faq-container" class="max-w-2xl mx-auto space-y-4">
             </div>
         </section>
-        
+
         <section id="endings" class="py-12 md:py-20">
             <h2 class="font-kiwi text-3xl text-center font-medium mb-12 text-gray-800 animated-element">運命の結末</h2>
             <div id="endings-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -485,8 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         faqContainer.appendChild(item);
     });
-
-
     // Scroll Animations
     const animatedElements = document.querySelectorAll('.animated-element');
     const observer = new IntersectionObserver((entries) => {
